@@ -1,4 +1,28 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
 
-yarn build
+# Check if this is an auto-amend execution
+if [ "$HUSKY_SKIP_BUILD" != "1" ]; then
+  # Run your build step
+  yarn build
+
+  # If the build is successful, add the build directory to the staging area
+  if [ $? -eq 0 ]; then
+    git add build/
+
+    # Set an environment variable to skip the build on the next run
+    HUSKY_SKIP_BUILD=1 export HUSKY_SKIP_BUILD
+
+    # Amend the commit without changing the commit message
+    git commit --amend --no-edit
+
+    # Unset the environment variable for future operations
+    unset HUSKY_SKIP_BUILD
+  else
+    echo "Build failed, aborting commit."
+    exit 1
+  fi
+else
+  # Reset the flag for future commits
+  unset HUSKY_SKIP_BUILD
+fi

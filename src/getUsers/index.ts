@@ -6,4 +6,5 @@ export {
     getHRContacts,
     getLocationContacts,
     getManagerContacts
+    // TODO: Custom user search for getJobTitlesForAdminContacts
 }
