@@ -4,6 +4,7 @@ import {
     getLocationContacts,
     getManagerContacts
 } from './getUsers';
+import { UserResponse } from 'stream-chat';
 
 class StreamUserSearch {
     private streamClient: StreamClient;
@@ -15,15 +16,15 @@ class StreamUserSearch {
         this.streamClient = streamClient;
     }
 
-    async getHRContacts(query: string): Promise<any[]> {
+    async getHRContacts(query?: string): Promise<UserResponse[]> {
         return getHRContacts(this.streamClient, query);
     }
 
-    async getLocationContacts(query: string): Promise<any[]> {
+    async getLocationContacts(query?: string): Promise<UserResponse[]> {
         return getLocationContacts(this.streamClient, query);
     }
 
-    async getManagerContacts(query: string): Promise<any[]> {
+    async getManagerContacts(query?: string): Promise<UserResponse[]> {
         return getManagerContacts(this.streamClient, query);
     }
 }

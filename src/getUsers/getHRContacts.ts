@@ -1,10 +1,11 @@
+import { UserResponse } from 'stream-chat'
 import { StreamClient, UserFilterArgs } from '../types'
 import { filterSelf } from '../util/filterSelf'
 
 export async function getHRContacts(
     streamClient: StreamClient,
-    query: string
-): Promise<any[]> {
+    query?: string
+): Promise<UserResponse[]> {
     if (!streamClient?.user?._location
         || !streamClient?.user?.teams?.length) {
         return []

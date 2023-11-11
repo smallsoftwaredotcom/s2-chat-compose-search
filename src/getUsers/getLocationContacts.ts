@@ -3,7 +3,7 @@ import { filterSelf } from '../util/filterSelf'
 
 export async function getLocationContacts(
     streamClient: StreamClient,
-    query: string
+    query?: string
 ): Promise<any[]> {
     let enable_location_search = false
     let locations_to_search: string[] = []
@@ -14,7 +14,8 @@ export async function getLocationContacts(
         return []
     }
 
-    if (streamClient.user._manager_for_locations?.length > 0) {
+    if (Array.isArray(streamClient.user._manager_for_locations)
+        && streamClient.user._manager_for_locations.length > 0) {
         enable_crew_chat = true
     }
 
@@ -36,8 +37,6 @@ export async function getLocationContacts(
             break
         case 'Crew to Crew Disabled (allow Office and Managers)':
             const {
-                _admin,
-                _hr,
                 _manager_for_locations,
                 _location
             } = streamClient.user

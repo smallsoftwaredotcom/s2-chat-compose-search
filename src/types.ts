@@ -9,7 +9,7 @@ interface ExtendedUserProperties {
     _chat_options: string;
 }
 
-type ExtendedUser = OwnUserResponse & ExtendedUserProperties;
+export type ExtendedUser = OwnUserResponse & ExtendedUserProperties;
 
 export interface UserFilterArgs extends UserFilters { }
 
@@ -18,5 +18,5 @@ export type UserFilterSort = UserSort
 export interface UserFilterResponse extends UserResponse { }
 
 export interface StreamClient extends StreamChat {
-    user: ExtendedUser;
+    user?: ExtendedUser | UserResponse | OwnUserResponse;
 }

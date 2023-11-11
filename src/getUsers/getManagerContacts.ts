@@ -3,7 +3,7 @@ import { filterSelf } from '../util/filterSelf'
 
 export async function getManagerContacts(
     streamClient: StreamClient,
-    query: string
+    query?: string
 ): Promise<any[]> {
     if (!streamClient?.user?._location
         || !streamClient?.user?.teams?.length) {
