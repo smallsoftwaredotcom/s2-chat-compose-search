@@ -19,13 +19,6 @@ export async function getLocationContacts(
         enable_crew_chat = true
     }
 
-    // if user is _admin or _hr, enable both
-    if (streamClient.user._admin || streamClient.user._hr) {
-        enable_location_search = true
-        enable_crew_chat = true
-        locations_to_search = []
-    }
-
     switch (streamClient.user._chat_options) {
         case 'Crew to Crew Disabled (allow Office)':
             if (streamClient.user._location === 'Office') {
@@ -59,6 +52,13 @@ export async function getLocationContacts(
         default:
             break
     }
+
+    if (streamClient.user._admin || streamClient.user._hr) {
+        enable_location_search = true
+        enable_crew_chat = true
+        locations_to_search = []
+    }
+
     if (enable_crew_chat) {
         try {
             const searchArgs: UserFilterArgs = {
@@ -70,6 +70,7 @@ export async function getLocationContacts(
                 if (!enable_location_search) {
                     searchArgs._location = { $eq: streamClient.user?._location }
                 } else if (locations_to_search.length > 0) {
+                    console.log(locations_to_search)
                     searchArgs._location = { $in: locations_to_search }
                 }
             } else searchArgs._location = { $eq: streamClient.user?._location }
